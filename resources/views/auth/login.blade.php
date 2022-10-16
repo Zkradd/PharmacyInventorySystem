@@ -48,9 +48,15 @@
                     </a>
                 @endif
 
-                <x-primary-button class="ml-3">
+               
+                    @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="underline text-sm text-gray-600 hover:text-gray-900"> Don't have an account yet?  Sign Up!</a><br>
+                        
+                            <x-primary-button class="ml-3">
                     {{ __('Log in') }}
                 </x-primary-button>
+                </div>
+            @endif
             </div>
         </form>
     </x-auth-card>
