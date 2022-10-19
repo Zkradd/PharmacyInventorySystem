@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MagazynController;
+use App\Http\Controllers\ProductController;
 
 
 /*
@@ -22,8 +22,14 @@ Route::get('/', function () {
     return redirect('/dashboard');
 });
 
+
+
 Route::get('/welcome', function () {
     return view('/welcome');
+});
+
+Route::get('/admin', function () {
+    return view('/admin');
 });
 
 
@@ -35,7 +41,7 @@ require __DIR__.'/auth.php';
 
 Route::middleware('auth')->group(function(){
 
-    Route::get('magazyn', [MagazynController::class, 'magazyn'])->name('magazyn');
+    Route::get('magazyn', [ProductController::class, 'magazyn'])->name('magazyn');
 
 
 

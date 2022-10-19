@@ -14,20 +14,24 @@
       <th scope="col">Price</th>
       <th scope="col">Quantity</th>
       <th scope="col">Description</th>
+
     </tr>
   </thead>
   <tbody>
 
-    @foreach($magazyn_items as $magazyn_items)
+    @foreach($products as $item)
     <tr>
-      <th scope="row">{{$magazyn_items->id}}</th>
-      <td>{{$magazyn_items->name}}</td>
-      <td>{{$magazyn_items->price}}</td>
-      <td>{{$magazyn_items->quantity}}</td>
-      <td>{{$magazyn_items->description}}</td>
+      <th scope="row">{{$item->id}}</th>
+      <td>{{$item->name}}</td>
+      <td>{{$item->price}}</td>
+      <td>{{$item->quantity}}</td>
+      <td>{{$item->description}}</td>
+      @foreach($item->categories as $category)
+      <td>{{$category->name}}</td>
+      @endforeach
      </tr>
     @endforeach
-    
+
   </tbody>
 </table>
 </div>

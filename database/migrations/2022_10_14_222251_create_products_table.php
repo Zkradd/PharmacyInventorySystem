@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('magazyn_items', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedInteger('price');
+            $table->decimal('price',13,2);
             $table->integer('quantity');
             $table->text('description');
-            
-            
+
+
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('magazyn_items');
+        Schema::dropIfExists('products');
     }
 };
