@@ -12,8 +12,6 @@ use App\Models\Photo;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
-use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpFoundation\Response;
 
 
 class ProductController extends Controller
@@ -136,27 +134,23 @@ public function searchProducts(Request $request){
     if($request->search){
         $searchPhrase = $request->search;
        
-    } else if($request->cookie('search')){
-        $searchPhrase = $request->cookie('search');
+    } else if($request->session()->has('search')){
+        $searchPhrase = $request->session()->get('search');
 
     } else{
         return redirect()->back()->with('message','Empty Search');
     }
 
     $searchProducts=Product::where('name', 'LIKE', '%'.$searchPhrase.'%')->get();
-    $searchCategories=Product::whereHas('categories', function(Builder $query)use($searchPhrase){
+    $searchCategories=Product::whereHas('categories', function(Builder $query) use ($searchPhrase){
         $query->where('name', 'LIKE', '%'.$searchPhrase.'%');
     })->get();
     $searchFinal=$searchProducts->merge($searchCategories);
     $searchFinal=$searchFinal->unique()->paginate(1);
+    
+    $request->session()->put('search', $searchPhrase)
 
-    return response()
-
-        ->cookie('search', $searchPhrase, 5)
-        ->view('productSearch', compact('searchFinal'));
-
-
-
+    return view('productSearch', compact('searchFinal'));
     }
 
     public function productUpdate(Request $request){
