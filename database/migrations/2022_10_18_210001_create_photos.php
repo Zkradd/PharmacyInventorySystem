@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
-            $table->string('url');
+            $table->string('uri');
             $table->unsignedBigInteger('product_id');
-
+            $table->timestamps();
             $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
         });
     }
