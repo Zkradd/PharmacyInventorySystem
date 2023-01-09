@@ -131,28 +131,29 @@ class ProductController extends Controller
      return redirect(route('magazyn'))->with('message', 'Product has been deleted');
     }
 
-    public function searchProducts(Request $request){
+public function searchProducts(Request $request){
 
     if($request->search){
-        $searchProducts=Product::where('name', 'LIKE', '%'.$request->search.'%')->get();
-        $searchCategories=Product::whereHas('categories', function(Builder $query)use($request){
-            $query->where('name', 'LIKE', '%'.$request->search.'%');
-        })->get();
-        $searchFinal=$searchProducts->merge($searchCategories);
-        $searchFinal=$searchFinal->unique()->paginate(1);
+        $searchPhrase = $request->search;
+       
+    } else if($request->cookie('search')){
+        $searchPhrase = $request->cookie('search');
 
-        return response()
-
-            ->cookie('search', $request->search, 5)
-            ->view('productSearch', compact('searchFinal'));
-    }
-    else if($request->cookie('search'))
-    {
-
-    }
-    else{
+    } else{
         return redirect()->back()->with('message','Empty Search');
     }
+
+    $searchProducts=Product::where('name', 'LIKE', '%'.$searchPhrase.'%')->get();
+    $searchCategories=Product::whereHas('categories', function(Builder $query)use($searchPhrase){
+        $query->where('name', 'LIKE', '%'.$searchPhrase.'%');
+    })->get();
+    $searchFinal=$searchProducts->merge($searchCategories);
+    $searchFinal=$searchFinal->unique()->paginate(1);
+
+    return response()
+
+        ->cookie('search', $searchPhrase, 5)
+        ->view('productSearch', compact('searchFinal'));
 
 
 
