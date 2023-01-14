@@ -29,6 +29,10 @@ class Product extends Model
         return $this->hasMany(Photo::class);
     }
 
+    public function batches(){
+        return $this->hasMany(ProductBatch::class);
+    }
+
     protected $fillable = ['name', 'price', 'quantity', 'description'];
     public $timestamps = false;
 

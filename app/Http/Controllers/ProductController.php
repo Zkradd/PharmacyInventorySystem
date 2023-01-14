@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 use App\Http\Resources\CategoryResource;
 
 
+use App\Models\ProductBatch;
+use App\Models\Shelf;
+use Illuminate\Bus\Batch;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
@@ -19,7 +23,7 @@ class ProductController extends Controller
 {
     public function magazyn()
     {
-        $products= Product::all()->paginate(5);
+        $products= Product::withSum('batches', 'quantity')->get()->paginate(5);
         return view('magazyn',compact('products'));
     }
 
@@ -40,19 +44,17 @@ class ProductController extends Controller
     public function addCategory(Request $request){
 
     }
-    public function addItem(Request $request){
+    public function addProduct(Request $request){
 //        dd($request);
         $request->validate([
             'name' => ['required', 'string'],
             'price' => ['required'],
-            'quantity' => ['required'],
             'description' => ['required', 'string'],
         ]);
 
         $item = new Product();
         $item->name = $request->name;
         $item->price = $request->price;
-        $item->quantity = $request->quantity;
         $item->description = $request->description;
         $item->save();
         if($request->input('images')){
@@ -167,17 +169,105 @@ public function searchProducts(Request $request){
     return view('productSearch', compact('searchFinal'));
     }
 
+    public function addBatch(Request $request){
+        $request->validate([
+            'product_id' => ['required', 'string'],
+            'shelf_id' => ['required'],
+            'quantity' => ['required'],
+            'expiration_date' => ['required'],
+        ]);
+
+        try{
+            $product = Product::findOrFail($request->product_id);
+            $shelf = Shelf::findOrFail($request->shelf_id);
+            $batch = new Batch();
+            $batch->quantity = $request->quantity;
+            $batch->expiration_date = $request->expiration_data;
+            $shelf->batches()->associate($batch);
+            $product->batches()->save($batch);
+            return redirect()->back()->with('success', 'Batch added successfully');
+        } catch (ModelNotFoundException $e){
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
+
+
+    }
+
+    public function editBatch(Request $request){
+        $request->validate([
+            'batch_id' => ['required'],
+            'shelf_id' => ['required'],
+            'quantity' => ['required'],
+            'expiration_date' => ['required'],
+        ]);
+
+        try{
+            $shelf = Shelf::findOrFail($request->shelf_id);
+            $batch = ProductBatch::findOrFail($request->batch_id);
+            $batch->shelf()->disassociate();
+            $batch->quantity = $request->quantity;
+            $batch->expiration_date = $request->expiration_data;
+            $shelf->batches()->associate($batch);
+            $batch->save();
+            return redirect()->back()->with('success', 'Batch edited successfully');
+        } catch (ModelNotFoundException $e){
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function deleteBatch(Request $request){
+        $request->validate([
+            'batch_id' => ['required'],
+        ]);
+
+        try{
+            $batch = ProductBatch::findOrFail($request->batch_id);
+            $batch->delete();
+            return redirect()->back()->with('success', 'Batch deleted successfully');
+        } catch (ModelNotFoundException $e){
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function releaseFromMagazyn(Request $request){
+        $request->validate([
+            'product_id' => ['required'],
+            'quantity' => ['required']
+        ]);
+
+        try{
+            $quantityRemaining = $request->quantity;
+            $product = Product::findOrFail($request->product_id);
+            $batches = $product->batches()->orderBy('expiration_date', 'desc')->get();
+            if($batches->sum('quantity') < $quantityRemaining){
+                return redirect()->back()->with('error', 'Not enough in stock');
+            }
+            foreach($batches as $batch){
+                if($batch->quantity <= $quantityRemaining){
+                    $quantityRemaining -= $batch->quantity;
+                    $batch->delete();
+                } else{
+                    $batch->quantity -= $quantityRemaining;
+                    $batch->save();
+                    break;
+                }
+            }
+            return redirect()->back()->with('success', 'Batch deleted successfully');
+        } catch (ModelNotFoundException $e){
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
     public function productUpdate(Request $request){
         $request->validate([
             'name' => ['required', 'string'],
             'price' => ['required'],
-            'quantity' => ['required'],
             'description' => ['required', 'string'],
         ]);
         $id = $request->id;
         $name = $request->name;
         $price = $request->price;
-        $quantity = $request->quantity;
         $description = $request->description;
 
 
@@ -223,7 +313,6 @@ public function searchProducts(Request $request){
         Product::where('id','=',$id)->update([
             'name'=>$name,
             'price'=>$price,
-            'quantity'=>$quantity,
             'description'=>$description
 
         ]);

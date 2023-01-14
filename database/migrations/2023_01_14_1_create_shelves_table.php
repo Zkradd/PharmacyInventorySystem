@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('shelves', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->decimal('price',13,2);
-            $table->text('description');
-
+            $table->unsignedBigInteger('section_id');
             $table->timestamps();
 
+            $table->foreign('section_id')->references('id')->on('sections')->cascadeOnDelete();
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('shelves');
     }
 };

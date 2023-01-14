@@ -65,7 +65,7 @@ Route::group(['middleware' => ['role:admin']], function(){
     Route::post('magazyn/delete_photos', [ProductController::class, 'deleteMultiplePhotos'])->name('magazyn_delete_photos');
     Route::post('magazyn/delete_photo', [ProductController::class, 'deletePhoto'])->name('magazyn_delete_photo');
     Route::post('magazyn/add_photo', [ProductController::class, 'addPhoto'])->name('magazyn_add_photo');
-    Route::post('magazyn/add', [ProductController::class, 'addItem'])->name('magazyn_add_item');
+    Route::post('magazyn/add', [ProductController::class, 'addProduct'])->name('magazyn_add_item');
     Route::post('users/search', [UserController::class, 'searchUsers'])->name('search_users');
     Route::get('admin/remove/{user}', [AdminController::class, 'removeAdmin'])->name('remove_admin');
     Route::get('admin/add/{user}', [AdminController::class, 'makeAdmin'])->name('add_admin');
