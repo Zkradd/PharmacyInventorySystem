@@ -18,6 +18,7 @@
             </div>
         </div>
 
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if(session()->has('message'))
                 <div class="mx-auto w-4/5 pb-10">
