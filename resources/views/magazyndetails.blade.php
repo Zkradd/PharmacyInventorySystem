@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight ">
-            {{ __('Magazyn') }}
+            {{ __('Szczegóły produktu ') }}
         </h2>
 
     </x-slot>
@@ -13,7 +13,7 @@
             <div class="pb-2">
             <a href="/magazyn" class="text-blue-700 ">
                 <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="submit">
-                    GO BACK
+                    WRÓĆ
                 </button></a>
             </div>
         </div>
@@ -82,13 +82,13 @@
                         <a href="#">
                             <h5 class=" namedeletebtn mb-2 text-2xl font-bold tracking-tight text-gray-900 deletevaluename ">{{$product->name}}</h5>
                         </a>
-                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Price: {{$product->price}}</p>
-                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Quantity: {{$product->quantity}}</p>
-                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Description: {{$product->description}}</p>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Cena: {{$product->price}}</p>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Ilość sztuk: {{$product->quantity}}</p>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Opis: {{$product->description}}</p>
                         <div class="mb-3">
                             @foreach($product->categories as $category)
                                 <span
-                                    class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">Category: {{$category->name}}</span>
+                                    class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">Kategoria: {{$category->name}}</span>
                             @endforeach
                         </div>
 
@@ -99,14 +99,14 @@
 
                         <a href="{{url('/magazyn/edit/'.$product->id) }}" class="text-blue-700">
                             <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="submit">
-                                EDIT
+                                EDYTUJ
                             </button></a>
 
                         <form action="{{route('product.destroy', $product->id)}}" method="POST" class="pt-1">
                         @csrf
                             @method('DELETE')
                             <button   class=" deletebtn text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" type="submit">
-                                DELETE
+                                USUŃ
                             </button>
 
 
@@ -136,14 +136,14 @@
         var name = $('.namedeletebtn').text();
         event.preventDefault();
         swal({
-            title: `Are you sure you want to delete ${name}?`,
-            text: "If you delete this, it will be gone forever.",
+            title: `Jesteś pewny, że chcesz usunąć ${name}?`,
+            text: "Jeśli go usuniesz, pozbędziesz się go na zawsze.",
             icon: "warning",
             type: "warning",
-            buttons: ["Cancel","Yes!"],
+            buttons: ["Anuluj","Usuń!"],
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Tak, usuń!'
         }).then((willDelete) => {
             if (willDelete) {
                 form.submit();

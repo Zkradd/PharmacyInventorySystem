@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Photo;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
@@ -70,7 +71,7 @@ class ProductController extends Controller
             }
         }
         $item->save();
-        return redirect()->back()->with('success', 'Item successfully added');
+        return redirect()->back()->with('success', 'Artykuł dodany pomyślnie!');
     }
     public function addPhoto(Request $request)
     {
@@ -139,7 +140,7 @@ class ProductController extends Controller
     public function destroy($id){
      Product::destroy($id);
 
-     return redirect(route('magazyn'))->with('message', 'Product has been deleted');
+     return redirect(route('magazyn'))->with('message', 'Artykuł został usunięty');
     }
 
 public function searchProducts(Request $request){
@@ -151,7 +152,7 @@ public function searchProducts(Request $request){
         $searchPhrase = $request->session()->get('search');
 
     } else{
-        return redirect()->back()->with('message','Empty Search');
+        return redirect()->back()->with('message','Puste wyszukiwanie');
     }
 
     $searchProducts=Product::where('name', 'LIKE', '%'.$searchPhrase.'%')->get();
@@ -226,7 +227,7 @@ public function searchProducts(Request $request){
             'description'=>$description
 
         ]);
-        return redirect()->back()->with('success', 'Item updated');
+        return redirect()->back()->with('success', 'Artykuł zaktualizowany');
     }
 
 

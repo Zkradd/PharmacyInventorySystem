@@ -12,12 +12,12 @@ class AdminController extends Controller
     }
     public function makeAdmin(User $user){
         $user->assignRole('admin');
-        return back()->with('success', 'User ' . $user->name . ' has been added to admin group');
+        return back()->with('success', 'User ' . $user->name . ' Został dodany jako Administrator');
     }
 
     public function removeAdmin(User $user){
         $user->removeRole('admin');
-        return back()->with('success', 'User ' . $user->name . ' has been removed from admin group');
+        return back()->with('success', 'User ' . $user->name . ' Został usunięty z roli Administratora');
     }
 
     public function manageUsers()
