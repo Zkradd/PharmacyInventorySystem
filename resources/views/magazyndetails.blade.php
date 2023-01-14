@@ -83,7 +83,7 @@
                         <a href="#">
                             <h5 class=" namedeletebtn mb-2 text-2xl font-bold tracking-tight text-gray-900 deletevaluename ">{{$product->name}}</h5>
                         </a>
-                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Cena: {{$product->price}}</p>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Cena: {{$product->price}} zł</p>
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Ilość sztuk: {{$product->quantity}}</p>
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Opis: {{$product->description}}</p>
                         <div class="mb-3">

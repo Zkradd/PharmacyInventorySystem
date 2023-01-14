@@ -94,7 +94,7 @@
                                 <a href="magazyn/detail/{{$item['id']}}">
                                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{$item->name}}</h5>
                                 </a>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Cena: {{$item->price}}</p>
+                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Cena: {{$item->price}} zł</p>
                                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Ilość sztuk: {{$item->quantity}}</p>
                                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Opis: {{$item->description}}</p>
                                 <div class="mb-3">
