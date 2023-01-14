@@ -22,6 +22,19 @@ class ProductController extends Controller
         return view('magazyn',compact('products'));
     }
 
+    public function widokMagazynu()
+    {
+
+        return view('widokMagazynu');
+    }
+
+    public function wydajZMagazynu()
+    {
+
+        return view('wydajZMagazynu');
+    }
+
+
 
     public function addCategory(Request $request){
 
@@ -133,7 +146,7 @@ public function searchProducts(Request $request){
 
     if($request->search){
         $searchPhrase = $request->search;
-       
+
     } else if($request->session()->has('search')){
         $searchPhrase = $request->session()->get('search');
 
@@ -146,9 +159,9 @@ public function searchProducts(Request $request){
         $query->where('name', 'LIKE', '%'.$searchPhrase.'%');
     })->get();
     $searchFinal=$searchProducts->merge($searchCategories);
-    $searchFinal=$searchFinal->unique()->paginate(1);
-    
-    $request->session()->put('search', $searchPhrase)
+    $searchFinal=$searchFinal->unique()->paginate(10);
+
+    $request->session()->put('search', $searchPhrase);
 
     return view('productSearch', compact('searchFinal'));
     }

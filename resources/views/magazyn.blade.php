@@ -36,7 +36,7 @@
                             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                         <span class="sr-only">Search icon</span>
                     </div>
-                        <input type="search" name="search" value="" placeholder="Search for product" class="block p-2.5 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                        <input type="search" name="search" value="" placeholder="Wyszukaj produkt..." class="block p-2.5 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
 
                     </div>
                 <div class="p-6 border-b border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 flex flex-wrap justify-around   ">
@@ -94,17 +94,17 @@
                                 <a href="magazyn/detail/{{$item['id']}}">
                                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{$item->name}}</h5>
                                 </a>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Price: {{$item->price}}</p>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Quantity: {{$item->quantity}}</p>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Description: {{$item->description}}</p>
+                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Cena: {{$item->price}}</p>
+                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Ilość sztuk: {{$item->quantity}}</p>
+                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Opis: {{$item->description}}</p>
                                 <div class="mb-3">
                                     @foreach($item->categories as $category)
-                                        <span class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">Category: {{$category->name}}</span>
+                                        <span class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">Kategoria: {{$category->name}}</span>
                                     @endforeach
                                 </div>
                                 <a href="/magazyn/detail/{{$item['id']}}" class="text-blue-700">
                                     <span class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="submit">
-                                        VIEW
+                                       ZOBACZ
                                     </span></a>
 
                             </div>

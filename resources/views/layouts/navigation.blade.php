@@ -21,9 +21,19 @@
                         {{ __('Magazyn') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('widokMagazynu')" :active="request()->routeIs('widokMagazynu')">
+                        {{ __('Widok Magazynu') }}
+                    </x-nav-link>
+
                     @hasrole('admin')
                     <x-nav-link :href="route('admin')" :active="request()->routeIs('admin')">
-                        {{ __('Panel Admina') }}
+                        {{ __('Przyjmij do Magazynu') }}
+                    </x-nav-link>
+                    @endhasrole
+
+                    @hasrole('admin')
+                    <x-nav-link :href="route('wydajZMagazynu')" :active="request()->routeIs('wydajZMagazynu')">
+                        {{ __('Wydaj z Magazynu') }}
                     </x-nav-link>
                     @endhasrole
 
@@ -38,17 +48,7 @@
             <!-- Dropdown menu -->
             <div id="dropdownmenu" class="z-5 hidden bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700">
                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                    <li>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                             onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </li>
                     <li>
                         <form method="GET" action="{{ route('account') }}">
                             @csrf
@@ -56,11 +56,35 @@
                             <x-dropdown-link :href="route('account')"
                                              onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Account') }}
+                                {{ __('Profil użytkownika') }}
                             </x-dropdown-link>
                         </form>
                     </li>
 
+                    @hasrole('admin')
+                    <li>
+                        <form method="GET" action="{{ route('manageUsers') }}">
+                            @csrf
+
+                            <x-dropdown-link :href="route('manageUsers')"
+                                             onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('Zarządzaj Uprawnieniami') }}
+                            </x-dropdown-link>
+                        </form>
+                    </li>
+                    @endhasrole
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <x-dropdown-link :href="route('logout')"
+                                             onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('Wyloguj') }}
+                            </x-dropdown-link>
+                        </form>
+                    </li>
                 </ul>
             </div>
 

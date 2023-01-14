@@ -1,3 +1,22 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.szafa{
+    border:3px solid black;
+    width:30vh;
+
+}
+
+.półka{
+
+    border:2px solid black;
+    height:5vh;
+}
+
+

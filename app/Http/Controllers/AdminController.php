@@ -19,4 +19,11 @@ class AdminController extends Controller
         $user->removeRole('admin');
         return back()->with('success', 'User ' . $user->name . ' has been removed from admin group');
     }
+
+    public function manageUsers()
+    {
+
+        return view('manageUsers');
+    }
+
 }

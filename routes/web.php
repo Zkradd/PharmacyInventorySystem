@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function(){
     Route::get('magazyn/detail/{id}', [ProductController::class, 'productDetail'])->name('productDetail');
     Route::get('search', [ProductController::class, 'searchProducts'])->name('searchProducts');
 
+    Route::get('widokMagazynu', [ProductController::class, 'widokMagazynu'])->name('widokMagazynu');
+
 
 
 
@@ -70,6 +72,9 @@ Route::group(['middleware' => ['role:admin']], function(){
     Route::post('categories/search', [ProductController::class, 'searchCategories'])->name('search_categories');
     Route::post('magazyn/update', [ProductController::class, 'productUpdate'])->name('productUpdate');
     Route::delete('magazyn/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
+
+    Route::get('wydajZMagazynu', [ProductController::class, 'wydajZMagazynu'])->name('wydajZMagazynu');
+    Route::get('manageUsers', [AdminController::class, 'manageUsers'])->name('manageUsers');
 });
 
 

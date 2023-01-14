@@ -7,7 +7,7 @@
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+            {{ __('Zapomniałeś/aś hasła? Nie ma problemu. Podaj swój adres e-mail a wyślemy link do resetu hasła, który pozwoli Ci wybrać nowe.') }}
         </div>
 
         <!-- Session Status -->
@@ -25,9 +25,14 @@
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-between mt-4 gap-9">
+                <a href="/">
+                <span>
+                    {{ __('Wróć') }}
+                </span>
+                   <a>
                 <x-primary-button>
-                    {{ __('Email Password Reset Link') }}
+                    {{ __('Prześlij link do resetowania') }}
                 </x-primary-button>
             </div>
         </form>
